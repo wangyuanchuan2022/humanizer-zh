@@ -1,0 +1,126 @@
+# The `humanizer` agent preset: a de-AI-flavor rewriting agent, trimmed from `standard`.
+#
+# Same agent-plane rules as `standard`: the roster mounts this file once under a
+# standing scope; rows that publish a service sit inside isolate realms. Trimmed
+# relative to `standard`: no delegation/workflows group, no goal tool. Web search
+# IS mounted for context research (casual contexts may need current platform
+# slang; formal contexts may pull the skill's People's Daily reference file).
+
+# ── identity ────────────────────────────────────────────────────────────────
+
+- id: persona
+  name: '@deepseek-ai/dsh-persona'
+  config:
+    text: >-
+      You are a text-rewriting agent ("Humanizer") powered by the {{model}} model. Your working directory is {{cwd}}.
+      Your job: rewrite AI-sounding text (Chinese or English) so it reads naturally, like a person wrote it,
+      without changing what it says. Before rewriting any text, load the `humanizer` skill and follow its rules:
+      keep every claim, name, number, date, quote, and citation; invent nothing; match the writer's tone.
+      Before rewriting, classify the target context with the skill's context-dispatch section (casual S1-S3 /
+      formal W1-W3); ask the user when unclear, then apply that context's positive strategy. For casual contexts
+      you may use the web search tool to check the target platform's current slang so references stay current.
+      When the user pastes text, return the draft, a short list of remaining AI patterns, and the final rewrite.
+      When the user names a file, rewrite only the prose and write the final text back or to the file they choose,
+      leaving code blocks, YAML frontmatter, data, and link targets unchanged.
+
+- id: agent-instructions
+  name: '@deepseek-ai/dsh-agent-instructions'
+  config:
+    maxBytes: 65536
+
+# ── shell ───────────────────────────────────────────────────────────────────
+
+# Both shell tools consume the host registry and provide nothing: no realm.
+- id: tool-bash
+  name: '@deepseek-ai/dsh-tool-bash'
+  disabled: !!js process.platform === 'win32'
+
+- id: tool-pwsh
+  name: '@deepseek-ai/dsh-tool-pwsh'
+  disabled: !!js process.platform !== 'win32'
+
+# ── filesystem ──────────────────────────────────────────────────────────────
+
+- id: tool-fs
+  name: '@deepseek-ai/dsh-tool-fs'
+
+- id: tool-fs-search
+  name: '@deepseek-ai/dsh-tool-fs-search'
+  config:
+    sampleOverCapGlobResults: false
+
+# ── background jobs ────────────────────────────────────────────────────────
+
+# Model-facing controls only; the job registry stays on the host plane.
+- id: tool-jobs
+  name: '@deepseek-ai/dsh-tool-jobs'
+
+# ── skills ──────────────────────────────────────────────────────────────────
+
+# The skill registry is host-plane and layered per scope; these rows register
+# into THIS preset's layer (the bundled humanizer skill below) and need no realm.
+- id: skill-filesystem
+  name: '@deepseek-ai/dsh-skill-filesystem'
+
+- id: tool-skill
+  name: '@deepseek-ai/dsh-tool-skill'
+
+# ── web ─────────────────────────────────────────────────────────────────────
+
+# The `web` service and its search provider stay in the host composition; only
+# the model-facing tool is per-session. Mounted for context research: casual
+# contexts check current platform slang, formal contexts rarely need it.
+- id: tool-web
+  name: '@deepseek-ai/dsh-tool-web'
+  config:
+    fetch: false
+    searchTimeoutMs: 60000
+
+# ── plan mode ───────────────────────────────────────────────────────────────
+
+# Plan state is per-agent, so an entry-local realm is the correct lifetime.
+- id: planning
+  name: cordis:group
+  group: true
+  isolate:
+    planMode: true
+  config:
+    - id: plan-mode
+      name: '@deepseek-ai/dsh-plan-mode'
+      config:
+        section: |
+              You are in plan mode. Stay in plan mode until exit_plan_mode succeeds or the user switches the session mode. For a rewriting task, planning means: identify the input (pasted text or file), the output destination, and the rewrite approach; do not edit or write files yet. When ready, call exit_plan_mode with the plan; make it the only and final tool call in that response.
+
+# ── compaction ──────────────────────────────────────────────────────────────
+
+# Same realm structure as `standard`: pruner shares the compaction realm;
+# tokenMeter stays on the host plane.
+- id: compaction
+  name: cordis:group
+  group: true
+  isolate:
+    compaction: true
+    toolResultPruner: true
+  config:
+    - id: compaction-basic
+      name: '@deepseek-ai/dsh-compaction-basic'
+
+    - id: command-compact
+      name: '@deepseek-ai/dsh-command-compact'
+
+    - id: tool-result-pruner
+      name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+      config:
+        thresholdChars: 8192
+        headChars: 4096
+        tailChars: 1024
+
+# ── remaining model-facing rows ─────────────────────────────────────────────
+
+- id: tool-ask-user
+  name: '@deepseek-ai/dsh-tool-ask-user'
+
+- id: tool-todo
+  name: '@deepseek-ai/dsh-tool-todo'
+  config:
+    allowParallelInProgress: true
