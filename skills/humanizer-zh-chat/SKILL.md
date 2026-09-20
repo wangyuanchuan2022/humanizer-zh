@@ -1,7 +1,7 @@
 ---
 name: humanizer-zh-chat
 description: |-
-  中文口语去 AI 味子技能（S1 熟人闲聊 / S2 社区公开发言 / S3 半正式交流）：把微信/QQ 聊天、知乎豆瓣贴吧B站评论回复、向老师上级的汇报等中人口语文本改写得更像真人，或按该口吻代写。触发词：聊天味、社区发言、知乎回答、豆瓣、贴吧、口语、像真人发的、去AI味。属 humanizer 主路由的子技能，可独立使用。
+  中文口语去 AI 味子技能（S1 熟人闲聊 / S2 社区公开发言 / S3 半正式交流）：把微信/QQ 聊天、知乎豆瓣贴吧B站评论回复、向老师上级的汇报等中人口语文本改写得更像真人，或按该口吻代写。触发词：聊天味、社区发言、知乎回答、豆瓣、贴吧、口语、像真人发的、去AI味。属 humanizer 主路由的子技能，可独立使用。v7.0.0。
 ---
 
 # humanizer-zh-chat — 中文口语档（S1/S2/S3）
@@ -33,3 +33,7 @@ description: |-
 - 文本中夹带长篇书面段落且需深改 → 该部分按 `humanizer-zh-write` 处理（skill 加载）。
 - 繁体台湾场合 → 改用 `humanizer-zh-hant`。
 - 平台流行语时效存疑时可用 web search 核对目标平台当前用语。
+
+## 伴生脚本与抽签
+
+- **write/recreate 动笔前先抽签**：运行 `node references/draw-sheet.mjs --seed <N> --genre zh-s2`（批内多篇加 `--index <I>`）出签照做；**draw sheet 随稿落盘**。无 shell 环境按 `references/draw-sheet.md`（契约文档：字段/参数带/错字纪律/模具黑名单）表格自抽并显式留痕。review/refactor 不强制抽签。

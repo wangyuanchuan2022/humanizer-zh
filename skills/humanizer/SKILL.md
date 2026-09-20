@@ -1,14 +1,14 @@
 ---
 name: humanizer
 description: |-
-  Rewrite AI-sounding text (Chinese or English) so it reads naturally without changing what it says. 中文场景触发词：去AI味、人味、AI腔、像人写的、改得自然。Use for any text the user asks to humanize, de-AI, or make sound more human — in fiction, essays, chat, or professional documents. v6.0: router skill — identifies text type and language, then loads the matching sub-skill (humanizer-zh-chat / humanizer-zh-write / humanizer-fiction / humanizer-pro / humanizer-zh-hant) which carries the complete de-AI playbook for that genre. Rebuilt on Nanako0129/sepia's measured three-layer model (narrative architecture → discourse flow → surface style).
+  Rewrite AI-sounding text (Chinese or English) so it reads naturally without changing what it says. 中文场景触发词：去AI味、人味、AI腔、像人写的、改得自然。Use for any text the user asks to humanize, de-AI, or make sound more human — in fiction, essays, chat, or professional documents. v7.0.0: router skill — identifies text type and language, then loads the matching sub-skill (humanizer-zh-chat / humanizer-zh-write / humanizer-fiction / humanizer-pro / humanizer-zh-hant) which carries the complete de-AI playbook for that genre. Built on sepia's measured three-layer model. v7 adds scripted randomness (draw-sheet), structure bands 1-5, non-goal detail quotas, and EN-branch reinforcement (model-fingerprints E-layer, distribution bands, genre params) — driven by the 2026-09 six-genre three-arm blind evaluation (450 texts, 13 reviewer seats).
 ---
 
-# humanizer — 去 AI 味写作·主路由（v6.0）
+# humanizer — 去 AI 味写作·主路由（v7.0.0）
 
 主路由只做**判定与分发**：识别文本类型与语言 → 用 skill 工具加载对应子技能 → 子技能内含该场景的完整做法。本文件不含具体规则。
 
-**底本**：v2-v4.6 基于 [blader/humanizer](https://github.com/blader/humanizer)（Wikipedia "Signs of AI writing" 35 条）+ 中文场景扩展；v5.0-v6.0 按 [Nanako0129/sepia](https://github.com/Nanako0129/sepia)（MIT, v0.11.0）的实测证据骨架重构。
+**底本**：v2-v4.6 基于 [blader/humanizer](https://github.com/blader/humanizer)（Wikipedia "Signs of AI writing" 35 条）+ 中文场景扩展；v5.0-v6.0 按 [Nanako0129/sepia](https://github.com/Nanako0129/sepia)（MIT, v0.11.0）的实测证据骨架重构；**v7.0.0 按本项目六文体三臂盲评（450 篇×13 席）的实测结论把确定性清单改造为带随机性的生成协议（抽签表/结构五档/非全指向配额）并补强英文支线**。
 
 ## 〇、三层模型（为什么表层改写不够）
 
@@ -27,10 +27,10 @@ AI 味分三层，**修复顺序 deepest first**。StoryScope（61,608 篇）实
 
 | 操作 | 契约 |
 |---|---|
-| **write** | 动笔**前**读子技能的领域/档位文件（架构与语域决策不能事后补救）；按子技能的生成流程执行 |
-| **review** | 仅诊断不改：产出带引文证据的缺陷清单即止 |
+| **write** | 动笔**前**读子技能的领域/档位文件（架构与语域决策不能事后补救）；**先抽签**——按子技能 SKILL「伴生脚本与抽签」节执行（draw-sheet 脚本出签照做，**签表随稿落盘**，含 seed 与实际取值；无 shell 环境按契约文档表格自抽并显式留痕）；按子技能的生成流程执行 |
+| **review** | 仅诊断不改：产出带引文证据的缺陷清单即止；**不强制抽签**（诊断对象是既有文本） |
 | **refactor** | 两阶段：先全量诊断，再逐项修，最深层优先；删除优于新增（实测 74/18/8）；新增词跑删除测试、替换处跑回退测试；修复不算增长 |
-| **recreate** | 提取事实/主张/意图为裸清单→核实无编造→按领域规则重写 |
+| **recreate** | 提取事实/主张/意图为裸清单→核实无编造→**先抽签**（同 write）→按领域规则重写 |
 
 **交付格式**：write 与 recreate 为初稿 + 残留 AI 模式清单 + 终稿三段交付；refactor 缺省两段（终稿 + 残留清单），结构调整幅度大时按三段；turing-test 场景自然度优先；红队自评 AI 概率超 40% 修订一次再交付。
 

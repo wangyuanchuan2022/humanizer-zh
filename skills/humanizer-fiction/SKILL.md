@@ -1,7 +1,7 @@
 ---
 name: humanizer-fiction
 description: |-
-  小说/虚构故事/文学性叙事散文的去 AI 味子技能（英文为主，中文通用）：修复叙事架构层指纹（主题直给/因果单线/结局收束/时间线性/情绪呈现/角色网络），基于 StoryScope 实测（架构层单独 93.2% 检出率）。触发词：小说、故事、fiction、novel、narrative、叙事、文学性散文、personal essay、去AI味。属 humanizer 主路由的子技能，可独立使用。
+  小说/虚构故事/文学性叙事散文的去 AI 味子技能（英文为主，中文通用）：修复叙事架构层指纹（主题直给/因果单线/结局收束/时间线性/情绪呈现/角色网络），基于 StoryScope 实测（架构层单独 93.2% 检出率）。触发词：小说、故事、fiction、novel、narrative、叙事、文学性散文、personal essay、去AI味。属 humanizer 主路由的子技能，可独立使用。v7.0.0。
 ---
 
 # humanizer-fiction — 小说/叙事档
@@ -36,3 +36,7 @@ description: |-
 - 中文小说的语言校准 → `humanizer-zh-write` 包的 zh-hans.md。
 - 诚实的非虚构报道叙事（有信源）→ 改用 `humanizer-pro` 的 journalism 领域。
 - 中文个人文书（申请书/自述）的升华专项 → `humanizer-zh-write` 包的 zh-rubric-f.md。
+
+## 伴生脚本与抽签
+
+- **write/recreate 动笔前先抽签**：运行 `node references/draw-sheet.mjs --seed <N> --genre en-fiction`（批内多篇加 `--index <I>`）出签照做；**draw sheet 随稿落盘**。无 shell 环境按 `references/draw-sheet.md`（契约文档：字段/参数带/错字纪律/模具黑名单）表格自抽并显式留痕。review/refactor 不强制抽签。

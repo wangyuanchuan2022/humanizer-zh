@@ -1,7 +1,7 @@
 ---
 name: humanizer-pro
 description: |-
-  专业文档去 AI 味子技能（中英通用）：发版说明/changelog/公告、PR 与 issue 回复、代码评审意见、事故复盘/RCA、工单与工单报告、技术文章/博客/教程、长篇新闻（特稿/调查/数据报道/采访）。目标不是骗过检测器，而是文本承载信息、有立场、读起来像署名者本人。触发词：发版说明、release notes、PR 回复、复盘、postmortem、RCA、工单、技术文章、博客、新闻报道、去AI味。属 humanizer 主路由的子技能，可独立使用。
+  专业文档去 AI 味子技能（中英通用）：发版说明/changelog/公告、PR 与 issue 回复、代码评审意见、事故复盘/RCA、工单与工单报告、技术文章/博客/教程、长篇新闻（特稿/调查/数据报道/采访）。目标不是骗过检测器，而是文本承载信息、有立场、读起来像署名者本人。触发词：发版说明、release notes、PR 回复、复盘、postmortem、RCA、工单、技术文章、博客、新闻报道、去AI味。属 humanizer 主路由的子技能，可独立使用。v7.0.0。
 ---
 
 # humanizer-pro — 专业文档档
@@ -35,3 +35,7 @@ description: |-
 - 虚构叙事/文学性散文 → `humanizer-fiction`。
 - 中文校准（简体）→ `humanizer-zh-write` 包 zh-hans.md；繁体台湾 → `humanizer-zh-hant`。
 - 个人经历随笔（不含报道事实）→ `humanizer-fiction`（narrative 路由）。
+
+## 伴生脚本与抽签
+
+- **write/recreate 动笔前先抽签**：运行 `node references/draw-sheet.mjs --seed <N> --genre en-tech`（或 en-essay/中文文体按目标；批内多篇加 `--index <I>`）出签照做；**draw sheet 随稿落盘**。无 shell 环境按 `references/draw-sheet.md`（契约文档：字段/参数带/错字纪律/模具黑名单）表格自抽并显式留痕。review/refactor 不强制抽签。

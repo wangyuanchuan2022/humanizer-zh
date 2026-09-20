@@ -4,6 +4,10 @@
 
 情节与句子之间的那一层：段落如何推进、能量在哪里塌陷、事物在页面上坐在哪里。证据：QUDsim/COLM 2025（Q）、Tripto et al. EMNLP 2025（T）、Russell et al. ACL 2025（R）、Beguš 2024（B）、asavvin 的提纲测试（A）。稳定的来源身份存于仓库研究台账（research ledger）；本文件中的单字母别名是文件局部的。除非被引来源明确测过该干预，处方均为 sepia 的设计推断。
 
+**按档授权（v7）**：本 pass 的结构类要求（呼应、收束、QUD 覆盖、开头功能）与 `draw-sheet.md` 的 structure_band 联动——档 1-2 不要求呼应与收束（结构动作数上限即档位数）；档 3 允许一处呼应+半收尾；档 4-5 才开放完整回环设计。**禁令条款（AI 指纹猎查）不因档位降低而豁免**——低档只是「不要求做」，不是「允许做 AI 指纹形态」。
+
+**元话语丛猎查（v7，英文侧实例；实测 E 级：生成臂 48-72% 篇目含、真人 12-33%）**：篇章层的元叙事提示——预告自己要做什么/承认什么/揭示什么——是跨篇复用最重的形态之一。英文实例："this is the part of the story where…"、"Let me do the honesty part first"、"I want to be clear/fair/honest"、"Here's what nobody tells you"。生成侧黑名单见 style-pass v7 节；本 pass 在 QUD 检查时同步猎查（元话语句不回答任何 QUD——它是关于回答的回答）。
+
 ## 1 QUD 检查——每个段落在回答什么问题？
 
 每个段落都隐含地回答一个问题——QUD（Question Under Discussion，讨论中的问题）。在 QUDsim 的受测样本里，两个模型拿到同一题材，各自独立复用了同一提问序列：*场景交代 → 为欺骗辩护 → 社会后果 → 责任之重*（Q）。表层改写不改变这个提问序列；要改变它必须重排或替换底层的推进招式（moves）。

@@ -1,8 +1,8 @@
 # humanizer-zh · 去 AI 味写作技能族（中文增强版）
 
-> A family of context-aware "de-AI" writing skills for Chinese & English, split by **genre × language** into six installable sub-skills. **v6.0 rebuilds on [Nanako0129/sepia](https://github.com/Nanako0129/sepia)**'s measured three-layer evidence model (narrative architecture → discourse flow → surface style; architecture-only detection reaches 93.2% while surface rewrites drop detection merely 95.5%→93.9%), keeping all Chinese-specific assets from v2-v4: context registers, programmatic-document fingerprints, a People's Daily sentence reference, and a ghost-writing workflow. Lineage also includes [blader/humanizer](https://github.com/blader/humanizer) (MIT).
+> A family of context-aware "de-AI" writing skills for Chinese & English, split by **genre × language** into six installable sub-skills. **v7.0.0 adds scripted randomness**: a seeded draw-sheet (`draw-sheet.mjs`) that randomizes structure bands (1-5), move selection and per-quota values inside human-corpus bands, plus non-goal detail quotas and an English-branch reinforcement layer (measured E-tier fingerprints, distribution bands, genre parameters) — all derived from a six-genre three-arm blind evaluation (450 texts, 13 reviewer seats). Built on [Nanako0129/sepia](https://github.com/Nanako0129/sepia)'s measured three-layer model (narrative architecture → discourse flow → surface style; architecture-only detection reaches 93.2% while surface rewrites drop detection merely 95.5%→93.9%), keeping all Chinese-specific assets from v2-v4: context registers, programmatic-document fingerprints, a People's Daily sentence reference, and a ghost-writing workflow. Lineage also includes [blader/humanizer](https://github.com/blader/humanizer) (MIT).
 
-一套"去 AI 味"（humanize）写作技能族：把带 AI 腔的文本改写得更自然、更像人写的，或从零写出人味，不改变原意、不编造事实。**不同文体、不同语言的去 AI 味做法各不相同**——v6.0 起把它们拆成六个自足的子技能，按需加载对应场景的完整作战手册。
+一套"去 AI 味"（humanize）写作技能族：把带 AI 腔的文本改写得更自然、更像人写的，或从零写出人味，不改变原意、不编造事实。**不同文体、不同语言的去 AI 味做法各不相同**——v6.0 起把它们拆成六个自足的子技能，按需加载对应场景的完整作战手册；**v7.0.0 把确定性规则改造为带随机性的生成协议**（抽签表 / 结构五档 / 非全指向配额），并补强英文支线。
 
 ## 技能族一览
 
@@ -14,6 +14,12 @@
 | **humanizer-fiction** | 小说 / 虚构故事 / 文学性叙事散文（英文为主，中文通用） | 叙事架构 7 决策组（StoryScope 实测）、篇章推进（QUD/提纲测试）、30 项诊断量表、措辞风格层、分模型指纹 |
 | **humanizer-pro** | 专业文档：发版说明 / PR·issue 回复 / 事故复盘 / 工单 / 技术文章 / 长篇报道（中英） | 十项检查、六领域细则、"先读场地"纪律、风格层 |
 | **humanizer-zh-hant** | 繁體中文（台灣場合） | 教育部標點規範、數字原則、台灣新聞語料量化基準、台灣詞彙守衛（簡體文本勿用本包） |
+
+## v7.0.0 随机化协议（各子技能包内 `references/draw-sheet.md` + `draw-sheet.mjs`）
+
+- **动笔前出签**：`node references/draw-sheet.mjs --seed <N> --genre <G>`（种子化可复现九字段 JSON），照签执行、签表随稿落盘；无 shell 环境按契约表格自抽并留痕。review/refactor 不强制抽签。
+- **三条机制**：① 脚本化随机性（手法选择 3-5 项、各配额带内抽样、错字类型与处数随机——禁固定同音词表、禁全批同值）；② 结构程度随机参考带（档 1-5 + 三禁令 + 体裁上限 + 低档豁免）；③ 细节与文献的非全指向性（非指向 / 半用 / 未消化三档配额，文献不必全部指向主旨）。
+- **跨篇纪律**：同批多篇维护「已用句式模具」台账（实测已暴露模具列入黑名单）；批量 ≥3 篇跑批级自检四项（抽签分布 / 跨篇模具 / 长度方差 / 非指向实质）。
 
 ## 共同设计（主路由内）
 
