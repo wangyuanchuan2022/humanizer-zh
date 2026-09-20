@@ -1,2 +1,2 @@
 name: Humanizer
-description: 去 AI 味改写智能体：输入带 AI 味的文本，输出更自然、更像人类写作的文本，不改变原意、不丢失信息。内置 35 条 AI 写作模式规则（改编自 blader/humanizer）与中文补充规则，支持读写文件以批量处理文档。
+description: 去 AI 味写作智能体（humanize/de-AI）：输入带 AI 味的文本输出更自然的人类写作，或按需撰写新文本；不改变原意、不编造事实。v5.0 三层架构（叙事架构→篇章推进→措辞风格）+ 四操作（write/review/refactor/recreate）+ 简繁双轨中文校准与六档语境路由，改编自 sepia 与 blader/humanizer。支持读写文件以批量处理文档。
