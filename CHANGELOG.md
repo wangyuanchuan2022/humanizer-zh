@@ -1,5 +1,18 @@
 # Changelog
 
+## v6.0 (2026-09-20) — 文体×语言子技能化
+
+sepia 专精故事写作，而本技能族覆盖多种文体与中英双语——不同文体、不同语言的去 AI 味做法各不相同，v6.0 将单一技能拆成**六个自足子技能**，按需加载对应场景的完整做法：
+
+- **humanizer**（主路由，瘦身）：只做判定与分发（三层模型速览 + 四操作契约 + 硬护栏 + 校准三原则 + 路由表），不再承载具体规则
+- **humanizer-zh-chat**（中文口语 S1-S3）：colloquial-base + S 档细则 + zh-hans + 口语分流自检
+- **humanizer-zh-write**（中文书面 W1-W3）：written-base + W 档细则 + zh-hans + 九测自检 + 人民日报句库 + Group F 指针节（自 fiction rubric 迁入）+ 篇章层
+- **humanizer-fiction**（小说/叙事，英中）：narrative-pass + rubric 30 项 + style-pass + discourse-pass + 模型指纹
+- **humanizer-pro**（专业文档六领域，中英）：professional-pass + domains/ + style-pass + discourse-pass
+- **humanizer-zh-hant**（繁体台湾）：zh-hant 自足包
+
+工程：共用件（zh-hans/style-pass/discourse-pass/selfcheck）开发侧**单源管理**（src/），构建脚本分发复制到各包并哈希校验（防双源漂移）；Group F 从 fiction 量表迁至 zh 包，fiction 报告按加载条件引用；v5.0.1 修复批次的全部修正继承。
+
 ## v5.0 (2026-09-19) — sepia 三层架构重构
 
 按 [Nanako0129/sepia](https://github.com/Nanako0129/sepia)（MIT）的实测证据骨架完全重构，v2-v4 的全部中文场景资产保留。

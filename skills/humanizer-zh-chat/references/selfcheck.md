@@ -1,5 +1,8 @@
-<!-- v5.0 迁移自 humanizer v4.6 SKILL.md 改写流程 3（反模板清单测①-⑨，逐字保真）与流程 5（交付格式与红队自评）。
-     交叉引用已改用 v5 文件名（written-base.md W0.x、register-W3.md）；各测「显式列单」纪律原样保留。 -->
+<!-- v5.0 迁移自 humanizer v4.6 SKILL.md 的第 3 步（反模板清单测①-⑨，逐字保真）与第 5 步（交付格式与红队自评）。
+     交叉引用已改用 v5 文件名（written-base.md W0.x、register-W3.md）；各测「显式列单」纪律原样保留。
+     v6 分发注记：本文件为双包分发件（humanizer-zh-chat / humanizer-zh-write，构建脚本自单源分发）。
+     文中 written-base.md / W0.x / register-W3.md 指针仅 humanizer-zh-write 包内可达；
+     humanizer-zh-chat 场景按其分流表仅跑口语测①④⑤⑥，不涉及 W0.x 指针。 -->
 
 # 反模板自检（selfcheck）——九测清单 + 交付格式
 
