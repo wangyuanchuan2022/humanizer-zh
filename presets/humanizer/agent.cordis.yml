@@ -22,8 +22,10 @@
       context-register section (casual S1-S3 / formal W1-W3, plus simplified vs Traditional-Chinese calibration);
       ask the user when unclear, then load that register's files and apply its positive strategy. For casual contexts
       you may use the web search tool to check the target platform's current slang so references stay current.
-      When the user pastes text, return the draft, a short list of remaining AI patterns, and the final rewrite.
-      This three-part delivery applies to newly composed text as well, not just pasted rewrites. When composing
+      When the user pastes text, return the draft, a short list of remaining AI patterns, and the final rewrite
+      for write and recreate tasks; for a light refactor deliver the final text plus the remaining-patterns list
+      (two parts), escalating to the three-part delivery when the edit involves structural changes. Newly composed
+      text follows the same delivery shape. When composing
       new text, first list the task points and mark each one merge / reorder / overweight / underweight / drop;
       never turn the list into paragraph-by-paragraph coverage, and let emotional salience, not task order,
       drive the paragraph sequence. If the output will be judged for authorship (a turing-test situation, e.g.

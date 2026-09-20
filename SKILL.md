@@ -1,7 +1,7 @@
 ---
 name: humanizer
 description: |-
-  Rewrite AI-sounding text (Chinese or English) so it reads naturally without changing what it says. Use for any text the user asks to humanize, de-AI, or make sound more human. v5.0 architecture (rebuilt on Nanako0129/sepia's measured evidence): three-layer model — narrative architecture → discourse flow → surface style, deepest layer fixed first; four operations — write / review (diagnose only) / refactor (minimal edits) / recreate (full rewrite); calibration to the human band instead of inverting AI tells. Chinese coverage: six context registers (S1-S3 casual / W1-W3 formal) + simplified-Chinese calibration + full Traditional-Chinese Taiwan calibration; China programmatic documents (applications, self-statements) carry dedicated fingerprints (value-sublimation tables, cognition arcs, register drift).
+  Rewrite AI-sounding text (Chinese or English) so it reads naturally without changing what it says. 中文场景触发词：去AI味、人味、AI腔、像人写的、改得自然。Use for any text the user asks to humanize, de-AI, or make sound more human. v5.0 architecture (rebuilt on Nanako0129/sepia's measured evidence): three-layer model — narrative architecture → discourse flow → surface style, deepest layer fixed first; four operations — write / review (diagnose only) / refactor (minimal edits) / recreate (full rewrite); calibration to the human band instead of inverting AI tells. Chinese coverage: six context registers (S1-S3 casual / W1-W3 formal) + simplified-Chinese calibration + full Traditional-Chinese Taiwan calibration; China programmatic documents (applications, self-statements) carry dedicated fingerprints (value-sublimation tables, cognition arcs, register drift).
 ---
 
 # 去 AI 味改写规则（humanizer v5.0）
@@ -87,14 +87,14 @@ AI 味分三层，**修复顺序 deepest first**。StoryScope（61,608 篇故事
 
 | 操作 | 契约 |
 |---|---|
-| **write**（撰写新内容，含 0b 代写） | 动笔**前**读领域/档位文件——架构与语域决策不能事后补救。0b 流程：任务点列清单→逐点标注处置（合并/错位/加重/轻放/弃；加重轻放各 ≤1 处）→按情绪鲜活度排段序、禁逐点成段→大纲定稿前对目标文体模板链做一次结构变化（written-base W0.11）→列材料清单逐条过核验（zh-hans 引用纪律）→按选定档位正向策略成文 |
+| **write**（撰写新内容，含 0b 代写） | 动笔**前**读领域/档位文件——架构与语域决策不能事后补救。0b 流程：任务点列清单→逐点标注处置（合并/错位/加重/轻放/弃；加重轻放各 ≤1 处，其余点用合并/错位/弃）→按情绪鲜活度排段序、禁逐点成段→大纲定稿前对目标文体模板链做一次结构变化（written-base W0.11），并把所选结构变化与「保护资产清单」（人→动作→场景具体链，最不像 AI 的部分）一并写进标注表留档→列材料清单逐条过核验（zh-hans 引用纪律）并把清单留档备查→按选定档位正向策略成文 |
 | **review**（仅诊断，不改） | 产出缺陷清单即止：小说/叙事用 `rubric.md` 分组报告；专业/文书用对应 checklist findings + 引文证据。未获要求不应用任何修复 |
 | **refactor**（最小原地修改） | **两阶段**：先出全量缺陷清单，再逐项修，最深层优先。偏向替换/删除而非新增（实测编辑比例 74/18/8）。新增词跑**删除测试**（删掉后句意句法仍成立即删）；替换处跑**回退测试**（换回原词更省字且同义即回退）；修复不算增长（断裂句需要的连接词/主语/动词是修复）。改写不得比原文更营销腔 |
 | **recreate**（整篇重写） | 从原文提取事实/主张/意图为裸清单→核实无编造→按领域规则重写。适用于缺陷属结构层且文本短到手术不如重建 |
 
 两阶段协议对 refactor/recreate 不可选：无缺陷清单的逐句改写会让 AI 指纹**更**明显（专家检测器实测）。
 
-**交付格式**（write 与 recreate）：初稿 + 残留 AI 模式清单 + 终稿三段交付；收信人可能鉴别作者身份的场景（turing-test）按自然度优先原则处置漏点；红队自评：从收信人视角估 AI 概率，超 40% 修订一次再交付（详见 `selfcheck.md`）。
+**交付格式**：write 与 recreate 为初稿 + 残留 AI 模式清单 + 终稿三段交付；refactor 缺省两段（终稿 + 残留清单），结构调整幅度大时按三段；收信人可能鉴别作者身份的场景（turing-test）按自然度优先原则处置漏点；红队自评：从收信人视角估 AI 概率，超 40% 修订一次再交付（详见 `selfcheck.md`）。
 
 ## 四、硬护栏（所有操作无条件生效）
 
@@ -121,9 +121,9 @@ AI 味分三层，**修复顺序 deepest first**。StoryScope（61,608 篇故事
 4. **自检**：跑 `selfcheck.md` 反模板清单测（①-⑨按分流表）+ 所选档位验收清单（colloquial-base/written-base 末节）+ 删除/回退测试。
 5. **交付**：按第三节交付格式输出；无人值守场景补 `Deferred:`/`Protected:` 行。
 
-**快速清单模式**（外部审稿场景引用本技能时）：不需全流程，直接加载 `zh-hans.md`（中文）或 `style-pass.md` §2-3（英文）对照清单逐段核查，报告命中项+引文即可——这是 essay-arguer 等审稿流程的接入点。
+**快速清单模式**（外部审稿场景引用本技能时）：不需全流程，直接加载 `zh-hans.md`（中文）或 `style-pass.md` §2-3（英文）对照清单逐段核查，报告命中项+引文即可——这是各类外部审稿流程的接入点。
 
 ## 七、版本摘要
 
-- **v5.0（2026-09-19 sepia 骨架重构）**：架构从「35 条底线清单 + 六档路由 + 九测」重构为「三层模型 + 双维路由 + 四操作契约 + 分组诊断协议 + 校准三原则」；sepia 三 pass/rubric/professional/六领域/模型指纹全量编译入库（references/）；新增简体校准 `zh-hans.md` 与繁体台湾校准 `zh-hant.md`；35 条底线逐条安置进新文件（映射见开发档案 SPEC.md）；九测反模板独立为 `selfcheck.md`；v4.6 全部中国场景资产（六档/W0.1-W0.12/人民日报句库/0b 流程/查证通道/保护资产）保留并接入新路由。
+- **v5.0（2026-09-19 sepia 骨架重构）**：架构从「35 条底线清单 + 六档路由 + 九测」重构为「三层模型 + 双维路由 + 四操作契约 + 分组诊断协议 + 校准三原则」；sepia 三 pass/rubric/professional/六领域/模型指纹全量编译入库（references/）；新增简体校准 `zh-hans.md` 与繁体台湾校准 `zh-hant.md`；35 条底线逐条安置进新文件（安置映射表存开发工作区档案）；九测反模板独立为 `selfcheck.md`；v4.6 全部中国场景资产（六档/W0.1-W0.12/人民日报句库/0b 流程/查证通道/保护资产）保留并接入新路由。
 - v4.x 摘要（v3.2 逻辑调和 / v4.1 查证通道 / v4.2 引用核验 / v4.3 篇章指纹 / v4.4 骨架指纹 / v4.5 升华指纹 / v4.6 认识弧与语域漂移）的规则本体全部仍在库内：`written-base.md` W0.1-W0.12、`register-W3.md`、`colloquial-base.md` S0.1-S0.9、`selfcheck.md`。
