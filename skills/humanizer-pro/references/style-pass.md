@@ -116,6 +116,8 @@ Reinhart et al. 报告：指令微调模型偏爱信息密度高、名词味重�
 
 **v7 造词与巧喻配额。** 实测（E）：生成臂自造比喻/格言 5-10 个/篇 vs 真人 0-2（"self-hosting is a maintenance decision wearing a setup costume" 类）。生成侧：**每篇巧喻装置 ≤1 且进抽签**（draw sheet 的 `extended_metaphor` 键——有时抽到 0 个）；自造复合词（novel compound）全篇 ≤2 且进抽签（`coinage` 键）；「X is a Y wearing a Z costume」类拟人构造**直接禁**（模具黑名单）。
 
+**v7.1 金句位置抽签（中英通用；实测源=Phase A 人臂语义标注，n=90 句）。** 数量配额只管有多少，不管放哪——**金句总落段尾/收束位是独立于密度的指纹**（训练读者判据③：「太知道什么时候该出现好句子」）。人臂实测：最有力句 end 位仅 52%（middle 37% / start 11%；zh-s2 甚至 end=middle 持平 44/44）。执行：coinage/aphorism 的段内位置随 draw sheet 的 `power_position` 抽签落位；**end 位不得连续两段出现**；middle/start 位的实现=埋在段中前后皆平句不复现，或出现后紧接平淡句自我削弱（undercut）。自检侧：批内 end 位金句占比 ≤3/5（coinage/aphorism>0 时，selfcheck 批级自检⑧）。
+
 ## 5b 英文文体参数档（v7）
 
 句长方差、缩略率、词汇平实度是文体参数，不是普适常数（本节 §5 首句原则的落地）。英文三档：

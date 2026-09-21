@@ -1,7 +1,7 @@
 ---
 name: humanizer-fiction
 description: |-
-  小说/虚构故事/文学性叙事散文的去 AI 味子技能（英文为主，中文通用）：修复叙事架构层指纹（主题直给/因果单线/结局收束/时间线性/情绪呈现/角色网络），基于 StoryScope 实测（架构层单独 93.2% 检出率）。触发词：小说、故事、fiction、novel、narrative、叙事、文学性散文、personal essay、去AI味。属 humanizer 主路由的子技能，可独立使用。v7.0.0。
+  小说/虚构故事/文学性叙事散文的去 AI 味子技能（英文为主，中文通用）：修复叙事架构层指纹（主题直给/因果单线/结局收束/时间线性/情绪呈现/角色网络），基于 StoryScope 实测（架构层单独 93.2% 检出率）。触发词：小说、故事、fiction、novel、narrative、叙事、文学性散文、personal essay、去AI味。属 humanizer 主路由的子技能，可独立使用。v7.1.0。
 ---
 
 # humanizer-fiction — 小说/叙事档

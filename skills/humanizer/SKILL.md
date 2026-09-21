@@ -1,14 +1,14 @@
 ---
 name: humanizer
 description: |-
-  Rewrite AI-sounding text (Chinese or English) so it reads naturally without changing what it says. 中文场景触发词：去AI味、人味、AI腔、像人写的、改得自然。Use for any text the user asks to humanize, de-AI, or make sound more human — in fiction, essays, chat, or professional documents. v7.0.0: router skill — identifies text type and language, then loads the matching sub-skill (humanizer-zh-chat / humanizer-zh-write / humanizer-fiction / humanizer-pro / humanizer-zh-hant) which carries the complete de-AI playbook for that genre. Built on sepia's measured three-layer model. v7 adds scripted randomness (draw-sheet), structure bands 1-5, non-goal detail quotas, and EN-branch reinforcement (model-fingerprints E-layer, distribution bands, genre params) — driven by the 2026-09 six-genre three-arm blind evaluation (450 texts, 13 reviewer seats).
+  Rewrite AI-sounding text (Chinese or English) so it reads naturally without changing what it says. 中文场景触发词：去AI味、人味、AI腔、像人写的、改得自然。Use for any text the user asks to humanize, de-AI, or make sound more human — in fiction, essays, chat, or professional documents. v7.1.0: router skill — identifies text type and language, then loads the matching sub-skill (humanizer-zh-chat / humanizer-zh-write / humanizer-fiction / humanizer-pro / humanizer-zh-hant) which carries the complete de-AI playbook for that genre. Built on sepia's measured three-layer model. v7 adds scripted randomness (draw-sheet), structure bands 1-5, non-goal detail quotas, and EN-branch reinforcement (model-fingerprints E-layer, distribution bands, genre params) — driven by the 2026-09 six-genre three-arm blind evaluation (450 texts, 13 reviewer seats). v7.1 adds position/presence/form randomization (noise_position, power_position, chain_length, meaningless-badness family with a measured form pool), a 12-move pool, and batch mode with six batch constraints — driven by a trained-reader four-criteria blind test and a 32-piece human-corpus semantic annotation.
 ---
 
-# humanizer — 去 AI 味写作·主路由（v7.0.0）
+# humanizer — 去 AI 味写作·主路由（v7.1.0）
 
 主路由只做**判定与分发**：识别文本类型与语言 → 用 skill 工具加载对应子技能 → 子技能内含该场景的完整做法。本文件不含具体规则。
 
-**底本**：v2-v4.6 基于 [blader/humanizer](https://github.com/blader/humanizer)（Wikipedia "Signs of AI writing" 35 条）+ 中文场景扩展；v5.0-v6.0 按 [Nanako0129/sepia](https://github.com/Nanako0129/sepia)（MIT, v0.11.0）的实测证据骨架重构；**v7.0.0 按本项目六文体三臂盲评（450 篇×13 席）的实测结论把确定性清单改造为带随机性的生成协议（抽签表/结构五档/非全指向配额）并补强英文支线**。
+**底本**：v2-v4.6 基于 [blader/humanizer](https://github.com/blader/humanizer)（Wikipedia "Signs of AI writing" 35 条）+ 中文场景扩展；v5.0-v6.0 按 [Nanako0129/sepia](https://github.com/Nanako0129/sepia)（MIT, v0.11.0）的实测证据骨架重构；**v7.0.0 按本项目六文体三臂盲评（450 篇×13 席）的实测结论把确定性清单改造为带随机性的生成协议（抽签表/结构五档/非全指向配额）并补强英文支线**；**v7.1.0 按训练读者盲测四判据（2026-09 两轮 30/30）+ 32 篇人臂语义标注扩展四轴：位置/有无/形态随机化（noise_position/power_position/chain_length）、无意义坏痕族（实测形态池）、手法池 7→12、批模式六约束**。
 
 ## 〇、三层模型（为什么表层改写不够）
 

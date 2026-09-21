@@ -1,8 +1,8 @@
 # humanizer-zh · 去 AI 味写作技能族（中文增强版）
 
-> A family of context-aware "de-AI" writing skills for Chinese & English, split by **genre × language** into six installable sub-skills. **v7.0.0 adds scripted randomness**: a seeded draw-sheet (`draw-sheet.mjs`) that randomizes structure bands (1-5), move selection and per-quota values inside human-corpus bands, plus non-goal detail quotas and an English-branch reinforcement layer (measured E-tier fingerprints, distribution bands, genre parameters) — all derived from a six-genre three-arm blind evaluation (450 texts, 13 reviewer seats). Built on [Nanako0129/sepia](https://github.com/Nanako0129/sepia)'s measured three-layer model (narrative architecture → discourse flow → surface style; architecture-only detection reaches 93.2% while surface rewrites drop detection merely 95.5%→93.9%), keeping all Chinese-specific assets from v2-v4: context registers, programmatic-document fingerprints, a People's Daily sentence reference, and a ghost-writing workflow. Lineage also includes [blader/humanizer](https://github.com/blader/humanizer) (MIT).
+> A family of context-aware "de-AI" writing skills for Chinese & English, split by **genre × language** into six installable sub-skills. **v7 adds scripted randomness**: a seeded draw-sheet (`draw-sheet.mjs`) that randomizes structure bands (1-5), move selection and per-quota values inside human-corpus bands, plus non-goal detail quotas and an English-branch reinforcement layer (measured E-tier fingerprints, distribution bands, genre parameters) — all derived from a six-genre three-arm blind evaluation (450 texts, 13 reviewer seats). **v7.1 extends randomization from quantity to position / presence / form**: noise placement zones (non-goal details skew early, blemishes skew late — complementary structure), aphorism in-paragraph position (human end-rate is only 52%), object chain length (orphan details 57%), and a measured meaningless-badness family — driven by a trained-reader four-criteria blind test and a 32-piece human-corpus semantic annotation. Built on [Nanako0129/sepia](https://github.com/Nanako0129/sepia)'s measured three-layer model (narrative architecture → discourse flow → surface style; architecture-only detection reaches 93.2% while surface rewrites drop detection merely 95.5%→93.9%), keeping all Chinese-specific assets from v2-v4: context registers, programmatic-document fingerprints, a People's Daily sentence reference, and a ghost-writing workflow. Lineage also includes [blader/humanizer](https://github.com/blader/humanizer) (MIT).
 
-一套"去 AI 味"（humanize）写作技能族：把带 AI 腔的文本改写得更自然、更像人写的，或从零写出人味，不改变原意、不编造事实。**不同文体、不同语言的去 AI 味做法各不相同**——v6.0 起把它们拆成六个自足的子技能，按需加载对应场景的完整作战手册；**v7.0.0 把确定性规则改造为带随机性的生成协议**（抽签表 / 结构五档 / 非全指向配额），并补强英文支线。
+一套"去 AI 味"（humanize）写作技能族：把带 AI 腔的文本改写得更自然、更像人写的，或从零写出人味，不改变原意、不编造事实。**不同文体、不同语言的去 AI 味做法各不相同**——v6.0 起把它们拆成六个自足的子技能，按需加载对应场景的完整作战手册；**v7.0 把确定性规则改造为带随机性的生成协议**（抽签表 / 结构五档 / 非全指向配额）并补强英文支线；**v7.1 把随机化从数量层扩展到位置/有无/形态三层**（噪声位置带 / 金句段内位 / 物件链长 / 无意义坏痕族，带值全部来自 32 篇人臂语义标注实测）。
 
 ## 技能族一览
 
@@ -15,11 +15,12 @@
 | **humanizer-pro** | 专业文档：发版说明 / PR·issue 回复 / 事故复盘 / 工单 / 技术文章 / 长篇报道（中英） | 十项检查、六领域细则、"先读场地"纪律、风格层 |
 | **humanizer-zh-hant** | 繁體中文（台灣場合） | 教育部標點規範、數字原則、台灣新聞語料量化基準、台灣詞彙守衛（簡體文本勿用本包） |
 
-## v7.0.0 随机化协议（各子技能包内 `references/draw-sheet.md` + `draw-sheet.mjs`）
+## v7 随机化协议（各子技能包内 `references/draw-sheet.md` + `draw-sheet.mjs`）
 
-- **动笔前出签**：`node references/draw-sheet.mjs --seed <N> --genre <G>`（种子化可复现九字段 JSON），照签执行、签表随稿落盘；无 shell 环境按契约表格自抽并留痕。review/refactor 不强制抽签。
-- **三条机制**：① 脚本化随机性（手法选择 3-5 项、各配额带内抽样、错字类型与处数随机——禁固定同音词表、禁全批同值）；② 结构程度随机参考带（档 1-5 + 三禁令 + 体裁上限 + 低档豁免）；③ 细节与文献的非全指向性（非指向 / 半用 / 未消化三档配额，文献不必全部指向主旨）。
-- **跨篇纪律**：同批多篇维护「已用句式模具」台账（实测已暴露模具列入黑名单）；批量 ≥3 篇跑批级自检四项（抽签分布 / 跨篇模具 / 长度方差 / 非指向实质）。
+- **动笔前出签**：`node references/draw-sheet.mjs --seed <N> --genre <G>`（种子化可复现十二字段 JSON；批内多篇用 `--batch g1,g2,...`，六条批级约束在生成器内强制），照签执行、签表随稿落盘；无 shell 环境按契约表格自抽并留痕。review/refactor 不强制抽签。
+- **三条机制（v7.0）**：① 脚本化随机性（手法选择 3-5 项、各配额带内抽样、错字类型与处数随机——禁固定同音词表、禁全批同值）；② 结构程度随机参考带（档 1-5 + 三禁令 + 体裁上限 + 低档豁免）；③ 细节与文献的非全指向性（非指向 / 半用 / 未消化三档配额，文献不必全部指向主旨）。
+- **四轴（v7.1，带值=32 篇人臂语义标注实测）**：① 噪声位置（非目标细节偏前、坏痕偏后——互补结构，均匀铺洒本身是指纹）；② 金句段内位（人臂 end 仅 52%，end 位不得连续两段）；③ 物件链长（孤儿细节 57%）；④ 无意义坏痕族（不迷人的无功能坏，P(在场) doc 75%/s2 50%/essay 25%，实测五形态池）；非指向配额 0 加权文体分化（essay P(0)=0.42 / doc P(0)=0.90 / s2 P(0)=0.83），手法池 7→12。
+- **跨篇纪律**：同批多篇维护「已用句式模具」台账（实测已暴露模具列入黑名单）；批量 ≥3 篇跑批级自检九项（v7 四项 + v7.1 五项：moves 交集 / 四轴在场率防过矫 / essay 批级 / 发力位占比 / 位置参数实现抽查）。
 
 ## 共同设计（主路由内）
 
